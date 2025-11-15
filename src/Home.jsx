@@ -1,7 +1,12 @@
 import React from "react";
 import Book from "./Book";
+import { useGetBooksQuery, useSearchBooksMutation } from "./Api/bookApi";
 
 function Home() {
+    const {data, error, isLoading} = useGetBooksQuery({
+        pageindex : 1,
+        pagesize : 20
+    });
   return (
     <div>
       <div class="container my-4">
@@ -18,7 +23,12 @@ function Home() {
 
       <div class="container mb-5">
         <div class="row g-4">
-           <Book />
+            {isLoading && <p>Loading...</p>}
+            {error && <p>Error fetching books</p>}
+            {data && data.responseData.map((book) => (
+                <Book book = {book} />
+            ))}
+           
         </div>
       </div>
     </div>
