@@ -1,7 +1,6 @@
 import React from "react";
 
 function Book({book}) {
-    console.log(book)
   return (
     <div class="col-md-3 col-sm-6">
       <div class="card book-card p-2 bg-dark text-light">

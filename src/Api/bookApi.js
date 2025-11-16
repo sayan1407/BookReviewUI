@@ -6,18 +6,31 @@ export const bookApi = createApi({
   endpoints: (builder) => ({
     //QUERY -> GET
     //MUTATION -> POST/PUT/DELETE
-    getBooks: builder.query({
-      query: ({pageindex,pagesize}) => ({
+    getBooks: builder.mutation({
+      query: ({pageindex,pagesize,type,keyword}) => ({
         url : "books",
-        method : "GET",
-        params : {
-            pageindex : pageindex,
-            pagesize : pagesize,
-
+        method : "POST",
+        body : {
+            pageIndex : pageindex,
+            pageSize : pagesize,
+            searchType : type,
+            searhKeyword : keyword
         }
       }),
       
       providesTags : ["Books"]
+    }),
+     getSearchOptions: builder.query({
+      query: (keyword) => ({
+        url : "books/searchoptions",
+        method : "GET",
+        params : {
+            keyword : keyword,
+
+        }
+      }),
+      
+     
     }),
     searchBooks : builder.mutation({
       query: (searchData) => ({
@@ -30,5 +43,5 @@ export const bookApi = createApi({
     
   }),
 });
-export const { useGetBooksQuery, useSearchBooksMutation
+export const { useGetBooksMutation, useSearchBooksMutation, useGetSearchOptionsQuery
  } = bookApi;
