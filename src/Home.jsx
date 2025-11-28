@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import Book from "./Book";
 import {
   useGetBooksMutation,
@@ -9,38 +9,48 @@ import SearchBook from "./searchBook";
 import { type } from "@testing-library/user-event/dist/type";
 
 function Home() {
-  const [getBooks] = useGetBooksMutation(); 
-  const[bookData, setBookData] = useState(null);
+  const [getBooks] = useGetBooksMutation();
+  const [bookData, setBookData] = useState(null);
   const fetchBooks = async () => {
-      const result = await getBooks({pageindex : 1, pagesize : 20, type : "", keyword : ""});
-      setBookData(result.data.responseData);
-    }
-  useEffect( () => {
-    
+    const result = await getBooks({
+      pageindex: 1,
+      pagesize: 20,
+      type: "",
+      keyword: "",
+    });
+    setBookData(result.data.responseData);
+  };
+  useEffect(() => {
     fetchBooks();
-  },[])
- 
-  const fetchData = async (keyword,type) => {
-    const res = await fetch(`https://localhost:7150/api/Book/books/searchoptions?keyword=${keyword}&type=${type}`);
+  }, []);
+
+  const fetchData = async (keyword, type) => {
+    const res = await fetch(
+      `https://localhost:7150/api/Book/books/searchoptions?keyword=${keyword}&type=${type}`
+    );
     const data = await res.json();
     const options = data.responseData;
     return options;
-
   };
 
- const handleSearch = async ({type, keyword}) => {
+  const handleSearch = async ({ type, keyword }) => {
     console.log("handle search called");
-    const result = await getBooks({pageindex : 1, pagesize : 5, type : type, keyword : keyword});
+    const result = await getBooks({
+      pageindex: 1,
+      pagesize: 10,
+      type: type,
+      keyword: keyword,
+    });
     console.log(result);
     setBookData(result.data.responseData);
-    }
+  };
 
   return (
     <div>
       <div class="container my-4">
         <div class="row justify-content-center">
           <div class="col-md-8 d-flex gap-2">
-            <SearchBook fetchData={fetchData} handleSearch = {handleSearch} />
+            <SearchBook fetchData={fetchData} handleSearch={handleSearch} />
           </div>
         </div>
       </div>
@@ -49,6 +59,37 @@ function Home() {
         <div class="row g-4">
           {bookData && bookData.map((book) => <Book book={book} />)}
         </div>
+      </div>
+      <div class="container mb-5">
+        <nav>
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+              <a class="page-link" href="#">
+                Previous
+              </a>
+            </li>
+            <li class="page-item active">
+              <a class="page-link" href="#">
+                1
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">
+                2
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">
+                3
+              </a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="#">
+                Next
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   );
