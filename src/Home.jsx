@@ -7,6 +7,7 @@ import {
 } from "./Api/bookApi";
 import SearchBook from "./searchBook";
 import { type } from "@testing-library/user-event/dist/type";
+import { toast } from "react-toastify";
 
 function Home() {
   const [getBooks] = useGetBooksMutation();
@@ -22,21 +23,34 @@ function Home() {
       type: "",
       keyword: "",
     });
-    setBookData(result.data.responseData.books);
-    let totalPagesCount = result.data.responseData.totalCount > 100 ? 10 : Math.floor(result.data.responseData.totalCount / 10);
-    setTotalPages(totalPagesCount);
-    let temp = [];
-    console.log("Total Pages:", totalPagesCount);
-    for (let i = 1; i <= totalPagesCount; i++) {
-      temp.push(
-        <li className="page-item">
-          <a className="page-link" href="#" onClick={() => handlePagination(i)}>
-            {i}
-          </a>
-        </li>
-      );
-      setPagesLink(temp);
+    if (result.data?.isSuccess) {
+      setBookData(result.data.responseData.books);
+      let totalPagesCount =
+        result.data.responseData.totalCount > 100
+          ? 10
+          : Math.ceil(result.data.responseData.totalCount / 10);
+      setTotalPages(totalPagesCount);
+      let temp = [];
+      console.log("Total Pages:", totalPagesCount);
+      for (let i = 1; i <= totalPagesCount; i++) {
+        temp.push(
+          <li className="page-item">
+            <a
+              className="page-link"
+              href="#"
+              onClick={() => handlePagination(i)}
+            >
+              {i}
+            </a>
+          </li>
+        );
+        setPagesLink(temp);
+      }
     }
+    else{
+      toast.error(result.data?.errorMessages.join(',') || "Failed to fetch books");
+    }
+    
   };
   useEffect(() => {
     fetchBooks();
@@ -49,8 +63,12 @@ function Home() {
       type: "",
       keyword: "",
     });
-    setCurrentPage((prevPage) => prevPage + 1);
-    setBookData(result.data.responseData.books);
+    if (result.data?.isSuccess) {
+           setCurrentPage((prevPage) => prevPage + 1);
+          setBookData(result.data.responseData.books);
+
+    }
+   
 
   }
 
@@ -61,8 +79,12 @@ function Home() {
       type: "",
       keyword: "",
     });
-    setCurrentPage((prevPage) => prevPage - 1);
+    if (result.data?.isSuccess) {
+       setCurrentPage((prevPage) => prevPage - 1);
     setBookData(result.data.responseData.books);
+
+    }
+   
   }
   const handlePagination = async (pageNumber) => {
     const result = await getBooks({
@@ -71,8 +93,12 @@ function Home() {
       type: "",
       keyword: "",
     });
-    setCurrentPage(pageNumber);
+    if (result.data?.isSuccess) {
+        setCurrentPage(pageNumber);
     setBookData(result.data.responseData.books);
+
+    }
+   
   }
 
   const fetchData = async (keyword, type) => {
@@ -93,20 +119,33 @@ function Home() {
       keyword: keyword,
     });
     console.log(result);
-    setBookData(result.data.responseData.books);
-    let totalPagesCount = result.data.responseData.totalCount > 100 ? 10 : Math.floor(result.data.responseData.totalCount / 10);
-    setTotalPages(totalPagesCount);
-    let temp = [];
-    console.log("Total Pages:", totalPagesCount);
-    for (let i = 1; i <= totalPagesCount; i++) {
-      temp.push(
-        <li className="page-item">
-          <a className="page-link" href="#" onClick={() => handlePagination(i)}>
-            {i}
-          </a>
-        </li>
-      );
-      setPagesLink(temp);
+    if (result.data?.isSuccess) {
+      setBookData(result.data.responseData.books);
+      let totalPagesCount =
+        result.data.responseData.totalCount > 100
+          ? 10
+          : Math.ceil(result.data.responseData.totalCount / 10);
+      setTotalPages(totalPagesCount);
+      let temp = [];
+      console.log("Total Pages:", totalPagesCount);
+      for (let i = 1; i <= totalPagesCount; i++) {
+        temp.push(
+          <li className="page-item">
+            <a
+              className="page-link"
+              href="#"
+              onClick={() => handlePagination(i)}
+            >
+              {i}
+            </a>
+          </li>
+        );
+        setPagesLink(temp);
+      }
+    }
+    else{
+      console.log(result.data?.responseMessage)
+      toast.error(result.data?.errorMessages.join(',') || "Failed to fetch books");
     }
   };
 
