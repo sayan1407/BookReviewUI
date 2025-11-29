@@ -11,6 +11,10 @@ import { type } from "@testing-library/user-event/dist/type";
 function Home() {
   const [getBooks] = useGetBooksMutation();
   const [bookData, setBookData] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(10);
+  const [pagesLink, setPagesLink] = useState([]);
+
   const fetchBooks = async () => {
     const result = await getBooks({
       pageindex: 1,
@@ -18,11 +22,58 @@ function Home() {
       type: "",
       keyword: "",
     });
-    setBookData(result.data.responseData);
+    setBookData(result.data.responseData.books);
+    let totalPagesCount = result.data.responseData.totalCount > 200 ? 10 : Math.floor(result.data.responseData.totalCount / 20);
+    setTotalPages(totalPagesCount);
+    let temp = [];
+    console.log("Total Pages:", totalPagesCount);
+    for (let i = 1; i <= totalPagesCount; i++) {
+      temp.push(
+        <li className="page-item">
+          <a className="page-link" href="#" onClick={() => handlePagination(i)}>
+            {i}
+          </a>
+        </li>
+      );
+      setPagesLink(temp);
+    }
   };
   useEffect(() => {
     fetchBooks();
   }, []);
+
+  const handleNext = async () => {
+     const result = await getBooks({
+      pageindex: currentPage + 1,
+      pagesize: 20,
+      type: "",
+      keyword: "",
+    });
+    setCurrentPage((prevPage) => prevPage + 1);
+    setBookData(result.data.responseData.books);
+
+  }
+
+  const handlePrevious = async () => {
+     const result = await getBooks({
+      pageindex: currentPage-1,
+      pagesize: 20,
+      type: "",
+      keyword: "",
+    });
+    setCurrentPage((prevPage) => prevPage - 1);
+    setBookData(result.data.responseData.books);
+  }
+  const handlePagination = async (pageNumber) => {
+    const result = await getBooks({
+      pageindex: pageNumber,
+      pagesize: 20,
+      type: "",
+      keyword: "",
+    });
+    setCurrentPage(pageNumber);
+    setBookData(result.data.responseData.books);
+  }
 
   const fetchData = async (keyword, type) => {
     const res = await fetch(
@@ -42,49 +93,49 @@ function Home() {
       keyword: keyword,
     });
     console.log(result);
-    setBookData(result.data.responseData);
+    setBookData(result.data.responseData.books);
+    let totalPagesCount = result.data.responseData.totalCount > 200 ? 10 : Math.floor(result.data.responseData.totalCount / 20);
+    setTotalPages(totalPagesCount);
+    let temp = [];
+    console.log("Total Pages:", totalPagesCount);
+    for (let i = 1; i <= totalPagesCount; i++) {
+      temp.push(
+        <li className="page-item">
+          <a className="page-link" href="#" onClick={() => handlePagination(i)}>
+            {i}
+          </a>
+        </li>
+      );
+      setPagesLink(temp);
+    }
   };
 
   return (
     <div>
-      <div class="container my-4">
-        <div class="row justify-content-center">
-          <div class="col-md-8 d-flex gap-2">
+      <div className="container my-4">
+        <div className="row justify-content-center">
+          <div className="col-md-8 d-flex gap-2">
             <SearchBook fetchData={fetchData} handleSearch={handleSearch} />
           </div>
         </div>
       </div>
 
-      <div class="container mb-5">
-        <div class="row g-4">
+      <div className="container mb-5">
+        <div className="row g-4">
           {bookData && bookData.map((book) => <Book book={book} />)}
         </div>
       </div>
-      <div class="container mb-5">
+      <div className="container mb-5">
         <nav>
-          <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-              <a class="page-link" href="#">
+          <ul className={`pagination justify-content-center`}>
+            <li className={`page-item  ${currentPage == 1 ? 'disabled' : ''}`}>
+              <a className="page-link" href="#" onClick={() => handlePrevious()}>
                 Previous
               </a>
             </li>
-            <li class="page-item active">
-              <a class="page-link" href="#">
-                1
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                2
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">
-                3
-              </a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">
+            {pagesLink.map((pageLink) => pageLink)}
+            <li className={`page-item  ${currentPage == totalPages ? 'disabled' : ''}`}>
+              <a className="page-link" href="#" onClick={() => handleNext()}>
                 Next
               </a>
             </li>
