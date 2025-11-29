@@ -18,12 +18,12 @@ function Home() {
   const fetchBooks = async () => {
     const result = await getBooks({
       pageindex: 1,
-      pagesize: 20,
+      pagesize: 10,
       type: "",
       keyword: "",
     });
     setBookData(result.data.responseData.books);
-    let totalPagesCount = result.data.responseData.totalCount > 200 ? 10 : Math.floor(result.data.responseData.totalCount / 20);
+    let totalPagesCount = result.data.responseData.totalCount > 100 ? 10 : Math.floor(result.data.responseData.totalCount / 10);
     setTotalPages(totalPagesCount);
     let temp = [];
     console.log("Total Pages:", totalPagesCount);
@@ -45,7 +45,7 @@ function Home() {
   const handleNext = async () => {
      const result = await getBooks({
       pageindex: currentPage + 1,
-      pagesize: 20,
+      pagesize: 10,
       type: "",
       keyword: "",
     });
@@ -57,7 +57,7 @@ function Home() {
   const handlePrevious = async () => {
      const result = await getBooks({
       pageindex: currentPage-1,
-      pagesize: 20,
+      pagesize: 10,
       type: "",
       keyword: "",
     });
@@ -67,7 +67,7 @@ function Home() {
   const handlePagination = async (pageNumber) => {
     const result = await getBooks({
       pageindex: pageNumber,
-      pagesize: 20,
+      pagesize: 10,
       type: "",
       keyword: "",
     });
@@ -94,7 +94,7 @@ function Home() {
     });
     console.log(result);
     setBookData(result.data.responseData.books);
-    let totalPagesCount = result.data.responseData.totalCount > 200 ? 10 : Math.floor(result.data.responseData.totalCount / 20);
+    let totalPagesCount = result.data.responseData.totalCount > 100 ? 10 : Math.floor(result.data.responseData.totalCount / 10);
     setTotalPages(totalPagesCount);
     let temp = [];
     console.log("Total Pages:", totalPagesCount);
@@ -129,13 +129,13 @@ function Home() {
         <nav>
           <ul className={`pagination justify-content-center`}>
             <li className={`page-item  ${currentPage == 1 ? 'disabled' : ''}`}>
-              <a className="page-link" href="#" onClick={() => handlePrevious()}>
+              <a className="page-link"  onClick={() => handlePrevious()}>
                 Previous
               </a>
             </li>
             {pagesLink.map((pageLink) => pageLink)}
             <li className={`page-item  ${currentPage == totalPages ? 'disabled' : ''}`}>
-              <a className="page-link" href="#" onClick={() => handleNext()}>
+              <a className="page-link"  onClick={() => handleNext()}>
                 Next
               </a>
             </li>

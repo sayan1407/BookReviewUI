@@ -13,7 +13,7 @@ function Book({book}) {
     <div className="col-md-3 col-sm-6">
       <div className="card book-card p-2 bg-dark text-light">
         <img
-          src="https://via.placeholder.com/200x250"
+          src={`images/${book.imageUrl}`}
           className="book-img w-100"
           alt="Book Image"
         />
