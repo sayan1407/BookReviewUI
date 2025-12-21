@@ -1,0 +1,26 @@
+.login-text-gradient {
+  background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  }
+  50% {
+    transform: scale(1.02);
+    text-shadow: 4px 4px 8px rgba(0,0,0,0.2);
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  }
+}
