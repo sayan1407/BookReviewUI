@@ -3,12 +3,15 @@ import './Login.css';
 import { useLoginMutation } from './Api/authApi';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUser } from './Redux/authSlice';
 
 const Login = () => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
     const [shouldDisabled, setShouldDisable] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     useEffect(() => {
         if (email && password) {
             setShouldDisable(false);
@@ -23,6 +26,9 @@ const Login = () => {
         console.log(result);
         if (result.data?.isSuccess) {
             toast.success(result.data.responseMessage);
+            console.log(result.data.responseData.token);
+            // localStorage.setItem("token", result.data.responseData.token); // Handled by Redux slice now
+            dispatch(setUser(result.data.responseData.token));
             navigate(-1)
         }
         else if (!result.data?.isSuccess) {

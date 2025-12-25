@@ -15,7 +15,8 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
   const [pagesLink, setPagesLink] = useState([]);
-
+  const [searchType, setSearchType] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState("");
   const fetchBooks = async () => {
     const result = await getBooks({
       pageindex: 1,
@@ -47,58 +48,60 @@ function Home() {
         setPagesLink(temp);
       }
     }
-    else{
+    else {
       toast.error(result.data?.errorMessages.join(',') || "Failed to fetch books");
     }
-    
+
   };
   useEffect(() => {
     fetchBooks();
   }, []);
 
   const handleNext = async () => {
-     const result = await getBooks({
+    const result = await getBooks({
       pageindex: currentPage + 1,
       pagesize: 10,
-      type: "",
-      keyword: "",
+      type: searchType,
+      keyword: searchKeyword,
     });
     if (result.data?.isSuccess) {
-           setCurrentPage((prevPage) => prevPage + 1);
-          setBookData(result.data.responseData.books);
+      setCurrentPage((prevPage) => prevPage + 1);
+      setBookData(result.data.responseData.books);
 
     }
-   
+
+
 
   }
 
   const handlePrevious = async () => {
-     const result = await getBooks({
-      pageindex: currentPage-1,
+    const result = await getBooks({
+      pageindex: currentPage - 1,
       pagesize: 10,
-      type: "",
-      keyword: "",
+      type: searchType,
+      keyword: searchKeyword,
     });
     if (result.data?.isSuccess) {
-       setCurrentPage((prevPage) => prevPage - 1);
-    setBookData(result.data.responseData.books);
+      setCurrentPage((prevPage) => prevPage - 1);
+      setBookData(result.data.responseData.books);
 
     }
-   
+
   }
   const handlePagination = async (pageNumber) => {
+    console.log(searchType, searchKeyword);
     const result = await getBooks({
       pageindex: pageNumber,
       pagesize: 10,
-      type: "",
-      keyword: "",
+      type: searchType,
+      keyword: searchKeyword,
     });
     if (result.data?.isSuccess) {
-        setCurrentPage(pageNumber);
-    setBookData(result.data.responseData.books);
+      setCurrentPage(pageNumber);
+      setBookData(result.data.responseData.books);
 
     }
-   
+
   }
 
   const fetchData = async (keyword, type) => {
@@ -111,6 +114,8 @@ function Home() {
   };
 
   const handleSearch = async ({ type, keyword }) => {
+    setSearchType(type);
+    setSearchKeyword(keyword);
     console.log("handle search called");
     const result = await getBooks({
       pageindex: 1,
@@ -126,27 +131,13 @@ function Home() {
           ? 10
           : Math.ceil(result.data.responseData.totalCount / 10);
       setTotalPages(totalPagesCount);
-      let temp = [];
-      console.log("Total Pages:", totalPagesCount);
-      for (let i = 1; i <= totalPagesCount; i++) {
-        temp.push(
-          <li className="page-item">
-            <a
-              className="page-link"
-              href="#"
-              onClick={() => handlePagination(i)}
-            >
-              {i}
-            </a>
-          </li>
-        );
-        setPagesLink(temp);
-      }
+
     }
-    else{
+    else {
       console.log(result.data?.responseMessage)
       toast.error(result.data?.errorMessages.join(',') || "Failed to fetch books");
     }
+
   };
 
   return (
@@ -168,13 +159,26 @@ function Home() {
         <nav>
           <ul className={`pagination justify-content-center`}>
             <li className={`page-item  ${currentPage == 1 ? 'disabled' : ''}`}>
-              <a className="page-link"  onClick={() => handlePrevious()}>
+              <a className="page-link" onClick={() => handlePrevious()}>
                 Previous
               </a>
             </li>
-            {pagesLink.map((pageLink) => pageLink)}
+            {[...Array(totalPages)].map((_, index) => {
+              const pageNum = index + 1;
+              return (
+                <li key={pageNum} className="page-item">
+                  <a
+                    className="page-link"
+                    href="#"
+                    onClick={() => handlePagination(pageNum)}
+                  >
+                    {pageNum}
+                  </a>
+                </li>
+              );
+            })}
             <li className={`page-item  ${currentPage == totalPages ? 'disabled' : ''}`}>
-              <a className="page-link"  onClick={() => handleNext()}>
+              <a className="page-link" onClick={() => handleNext()}>
                 Next
               </a>
             </li>

@@ -3,6 +3,7 @@ import './Login.css';
 import { useLoginMutation, useRegisterMutation } from './Api/authApi';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState(null);
@@ -79,6 +80,9 @@ const Login = () => {
                             style={{ backgroundColor: '#2b2d31', border: '1px solid #495057', color: '#fff' }}
                         />
                         <span className='text-danger'>{password !== reEnterPassword && "Passwords do not match"}</span>
+                    </div>
+                    <div className='mb-4'>
+                        <p>Already have an account? <Link to="/login">Login</Link></p>
                     </div>
                     <div className="d-grid">
                         <input type="submit" className="btn btn-primary btn-lg fw-bold"
