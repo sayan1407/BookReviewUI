@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './Login.css';
-import { useLoginMutation } from './Api/authApi';
+import { useLoginMutation, useRegisterMutation } from './Api/authApi';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
+    const [reEnterPassword, setReEnterPassword] = useState(null);
     const [shouldDisabled, setShouldDisable] = useState(false);
     const navigate = useNavigate();
     useEffect(() => {
@@ -16,20 +17,20 @@ const Login = () => {
             setShouldDisable(true);
         }
     }, [email, password])
-    const [login] = useLoginMutation();
-    const handleLogin = async (e) => {
+    const [register] = useRegisterMutation();
+    const handleRegistration = async (e) => {
         e.preventDefault();
-        const result = await login({ email, password });
+        const result = await register({ email, password });
         console.log(result);
         if (result.data?.isSuccess) {
-            toast.success(result.data.responseMessage);
-            navigate(-1)
+            toast.success("User registered successfully. Login to continue");
+            navigate("/login")
         }
         else if (!result.data?.isSuccess) {
             toast.error(result.data?.errorMessages.join('/n'));
         }
         else {
-            toast.error("Failed to login")
+            toast.error("Failed to register")
         }
     }
     return (
@@ -38,10 +39,10 @@ const Login = () => {
                 <div className="text-center mb-4">
                     <h2 className="fw-bold mb-3" style={{ color: '#fff' }}>Welcome Back</h2>
                     <p className="mb-3 login-text-gradient">
-                        Hey Book lover, login to explore, review and grow.
+                        Hey Book lover, register to explore, review and grow.
                     </p>
                 </div>
-                <form onSubmit={handleLogin} method='POST'>
+                <form onSubmit={handleRegistration} method='POST'>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label fw-semibold">Email address</label>
                         <input
@@ -66,9 +67,22 @@ const Login = () => {
                             style={{ backgroundColor: '#2b2d31', border: '1px solid #495057', color: '#fff' }}
                         />
                     </div>
+                    <div className="mb-4">
+                        <label htmlFor="reEnterPassword" className="form-label fw-semibold">Re-Enter PAssword</label>
+                        <input
+                            type="password"
+                            className="form-control form-control-lg"
+                            id="reEnterPassword"
+                            placeholder="********"
+                            value={reEnterPassword}
+                            onChange={(e) => setReEnterPassword(e.target.value)}
+                            style={{ backgroundColor: '#2b2d31', border: '1px solid #495057', color: '#fff' }}
+                        />
+                        <span className='text-danger'>{password !== reEnterPassword && "Passwords do not match"}</span>
+                    </div>
                     <div className="d-grid">
                         <input type="submit" className="btn btn-primary btn-lg fw-bold"
-                            value="Login"
+                            value="Register"
                             style={{ background: 'linear-gradient(45deg, #0d6efd, #0a58ca)', border: 'none' }} disabled={shouldDisabled}
                         />
                     </div>
