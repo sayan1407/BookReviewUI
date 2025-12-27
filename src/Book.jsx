@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function Book({book}) {
+function Book({ book }) {
   const fullStars = [];
   const blankStars = [];
-  for(let i=0;i<Math.round(book.avgRating);i++){
+  for (let i = 0; i < Math.round(book.avgRating); i++) {
     fullStars.push(<i className="bi bi-star-fill"></i>);
   }
-  for(let i=0;i<5-Math.round(book.avgRating);i++){
+  for (let i = 0; i < 5 - Math.round(book.avgRating); i++) {
     blankStars.push(<i className="bi bi-star"></i>);
   }
   return (
@@ -22,12 +23,12 @@ function Book({book}) {
           <p className="mb-1 text-light small">Author: {book.authorName}</p>
           <p className="mb-1 text-light small">Published: {new Date(book.publishedDate).toLocaleDateString('en-GB')}</p>
           <p className="mb-2 text-light small">Genre: {book.genre}</p>
-          
+
           <p className="mb-2 text-warning small">Rating: {fullStars} {blankStars}  ({Math.round(book.avgRating)})</p>
           <p className="mb-2 text-light small">Number of Ratings:{book.noOfRating}</p>
-          <a href="#" className="btn btn-primary w-100">
+          <Link to={`/review/${book.id}`} className="btn btn-primary w-100">
             Review
-          </a>
+          </Link>
         </div>
       </div>
     </div>
