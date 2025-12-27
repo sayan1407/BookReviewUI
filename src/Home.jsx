@@ -6,11 +6,12 @@ import {
   useSearchBooksMutation,
 } from "./Api/bookApi";
 import SearchBook from "./searchBook";
+import Spinner from "./components/Spinner";
 import { type } from "@testing-library/user-event/dist/type";
 import { toast } from "react-toastify";
 
 function Home() {
-  const [getBooks] = useGetBooksMutation();
+  const [getBooks, { isLoading }] = useGetBooksMutation();
   const [bookData, setBookData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
@@ -31,6 +32,7 @@ function Home() {
           ? 10
           : Math.ceil(result.data.responseData.totalCount / 10);
       setTotalPages(totalPagesCount);
+      setCurrentPage(1);
       let temp = [];
       console.log("Total Pages:", totalPagesCount);
       for (let i = 1; i <= totalPagesCount; i++) {
@@ -152,7 +154,11 @@ function Home() {
 
       <div className="container mb-5">
         <div className="row g-4">
-          {bookData && bookData.map((book) => <Book book={book} />)}
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            bookData && bookData.map((book) => <Book key={book.id || book.bookId} book={book} />)
+          )}
         </div>
       </div>
       <div className="container mb-5">
@@ -177,7 +183,7 @@ function Home() {
                 </li>
               );
             })}
-            <li className={`page-item  ${currentPage == totalPages ? 'disabled' : ''}`}>
+            <li className={`page-item  ${(currentPage == totalPages) && (totalPages < 10) ? 'disabled' : ''}`}>
               <a className="page-link" onClick={() => handleNext()}>
                 Next
               </a>
