@@ -15,6 +15,7 @@ function Home() {
   const [bookData, setBookData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
+  const [totalPagesUI, setTotalPagesUI] = useState(10);
   const [pagesLink, setPagesLink] = useState([]);
   const [searchType, setSearchType] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -31,6 +32,8 @@ function Home() {
         result.data.responseData.totalCount > 100
           ? 10
           : Math.ceil(result.data.responseData.totalCount / 10);
+      setTotalPagesUI(totalPagesCount);
+      totalPagesCount = Math.ceil(result.data.responseData.totalCount / 10)
       setTotalPages(totalPagesCount);
       setCurrentPage(1);
       let temp = [];
@@ -132,6 +135,8 @@ function Home() {
         result.data.responseData.totalCount > 100
           ? 10
           : Math.ceil(result.data.responseData.totalCount / 10);
+      setTotalPagesUI(totalPagesCount);
+      totalPagesCount = Math.ceil(result.data.responseData.totalCount / 10)
       setTotalPages(totalPagesCount);
 
     }
@@ -169,7 +174,7 @@ function Home() {
                 Previous
               </a>
             </li>
-            {[...Array(totalPages)].map((_, index) => {
+            {[...Array(totalPagesUI)].map((_, index) => {
               const pageNum = index + 1;
               return (
                 <li key={pageNum} className="page-item">
@@ -183,7 +188,7 @@ function Home() {
                 </li>
               );
             })}
-            <li className={`page-item  ${(currentPage == totalPages) && (totalPages < 10) ? 'disabled' : ''}`}>
+            <li className={`page-item  ${(currentPage == totalPages) ? 'disabled' : ''}`}>
               <a className="page-link" onClick={() => handleNext()}>
                 Next
               </a>

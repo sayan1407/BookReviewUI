@@ -73,9 +73,19 @@ export const bookApi = createApi({
       }),
       invalidatesTags: ["Review"]
     }),
+    getReviewsByBookId: builder.query({
+      query: ({ bookId, pageIndex, pageSize }) => ({
+        url: `books/reviews/${bookId}`,
+        method: 'GET',
+        params: {
+          pageIndex: pageIndex,
+          pageSize: pageSize
+        }
+      })
+    })
 
   }),
 });
 export const { useGetBooksMutation, useSearchBooksMutation, useGetSearchOptionsQuery, useGetBookByIdQuery, useGetReviewForUserQuery,
-  useUpdateReviewForUserMutation
+  useUpdateReviewForUserMutation, useGetReviewsByBookIdQuery
 } = bookApi;
