@@ -1,27 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './Review.css';
-import { useGetBookByIdQuery } from './Api/bookApi';
+import { useGetBookByIdQuery, useGetReviewForUserQuery, useUpdateReviewForUserMutation } from './Api/bookApi';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 const Review = () => {
     const { id } = useParams();
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviewText, setReviewText] = useState('');
     const { data } = useGetBookByIdQuery(id);
-    console.log(data);
-    // Mock Book Data
-    // const book = {
-    //     title: "The Great Adventure",
-    //     author: "John Doe",
-    //     publishedDate: "January 15, 2024",
-    //     coverImage: "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=2730&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" // Nice placeholder
-    // };
-
-    const handleSubmit = (e) => {
+    const userId = useSelector((state) => state.auth.userId);
+    console.log(userId);
+    console.log(id);
+    const { data: reviewData } = useGetReviewForUserQuery({
+        userId,
+        bookId: id
+    });
+    const [updateReview] = useUpdateReviewForUserMutation()
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('Review Submitted! (Visual Demo)');
-        // Functionality not required per instructions
+        const result = await updateReview({
+            userId: userId,
+            bookId: id,
+            comment: reviewText,
+            rating: rating
+        })
+        console.log(result)
+        if (result?.data?.isSuccess) {
+            toast.success("Review added successfully")
+        }
+        else {
+            toast.error("There are some unexpected errors. Review not added")
+        }
     };
+    useEffect(() => {
+        if (reviewData?.responseData) {
+            setReviewText(reviewData?.responseData?.comment);
+            setRating(reviewData?.responseData?.rating);
+
+        }
+
+        console.log(reviewData);
+    }, [reviewData])
 
     return (
         <div className="review-container">

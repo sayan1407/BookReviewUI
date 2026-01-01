@@ -7,7 +7,19 @@ const initialState = {
         if (token) {
             try {
                 const decoded = jwtDecode(token);
-                return decoded.email; // Storing email as the user identifier for now
+                return decoded.email; // Storing email as the user identifier 
+            } catch (e) {
+                return null;
+            }
+        }
+        return null;
+    })(),
+    userId: (() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            try {
+                const decoded = jwtDecode(token);
+                return decoded.id; // Storing email as the user identifier 
             } catch (e) {
                 return null;
             }
@@ -26,6 +38,7 @@ export const authSlice = createSlice({
             try {
                 const decoded = jwtDecode(action.payload);
                 state.user = decoded.email;
+                state.userId = decoded.id;
                 localStorage.setItem("token", action.payload);
             } catch (e) {
                 state.user = null;
