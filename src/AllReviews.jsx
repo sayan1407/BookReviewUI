@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetBookByIdQuery, useGetReviewsByBookIdQuery } from './Api/bookApi';
+import WithAuth from './HOC/WithAuth';
 
 const AllReviews = () => {
     const { id } = useParams();
@@ -14,7 +15,6 @@ const AllReviews = () => {
                 reviewsData?.responseData?.length > 100
                     ? 10
                     : Math.ceil(reviewsData?.responseData?.length / 10);
-            console.log(totalPagesCount);
             setTotalPages(totalPagesCount);
 
         }
@@ -84,38 +84,41 @@ const AllReviews = () => {
                     <div className="text-light">No reviews yet for this book.</div>
                 )}
             </div>
-            <div className="container mb-5">
-                <nav>
-                    <ul className={`pagination justify-content-center`}>
-                        <li className={`page-item  ${currentPage == 1 ? 'disabled' : ''}`}>
-                            <a className="page-link" onClick={() => handlePrevious()}>
-                                Previous
-                            </a>
-                        </li>
-                        {[...Array(totalPages)].map((_, index) => {
-                            const pageNum = index + 1;
-                            return (
-                                <li key={pageNum} className="page-item">
-                                    <a
-                                        className="page-link"
-                                        href="#"
-                                        onClick={() => handlePagination(pageNum)}
-                                    >
-                                        {pageNum}
-                                    </a>
-                                </li>
-                            );
-                        })}
-                        <li className={`page-item  ${(currentPage == totalPages) && (totalPages < 10) ? 'disabled' : ''}`}>
-                            <a className="page-link" onClick={() => handleNext()}>
-                                Next
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            {totalPages > 1 &&
+                <div className="container mb-5">
+                    <nav>
+                        <ul className={`pagination justify-content-center`}>
+                            <li className={`page-item  ${currentPage == 1 ? 'disabled' : ''}`}>
+                                <a className="page-link" onClick={() => handlePrevious()}>
+                                    Previous
+                                </a>
+                            </li>
+                            {[...Array(totalPages)].map((_, index) => {
+                                const pageNum = index + 1;
+                                return (
+                                    <li key={pageNum} className="page-item">
+                                        <a
+                                            className="page-link"
+                                            href="#"
+                                            onClick={() => handlePagination(pageNum)}
+                                        >
+                                            {pageNum}
+                                        </a>
+                                    </li>
+                                );
+                            })}
+                            <li className={`page-item  ${(currentPage == totalPages) && (totalPages < 10) ? 'disabled' : ''}`}>
+                                <a className="page-link" onClick={() => handleNext()}>
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            }
+
         </div>
     );
 };
 
-export default AllReviews;
+export default WithAuth(AllReviews);

@@ -155,3 +155,12 @@
 .submit-btn:active {
     transform: translateY(0);
 }
+
+.submit-btn:disabled {
+    background: #444;
+    color: #888;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.6;
+}

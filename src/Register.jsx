@@ -22,7 +22,6 @@ const Login = () => {
     const handleRegistration = async (e) => {
         e.preventDefault();
         const result = await register({ email, password });
-        console.log(result);
         if (result.data?.isSuccess) {
             toast.success("User registered successfully. Login to continue");
             navigate("/login")

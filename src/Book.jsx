@@ -34,7 +34,7 @@ function Book({ book }) {
 
         </div>
         <Link to={`/review/${book.id}`} className="btn btn-primary w-100">
-          Review
+          Add a Review
         </Link>
       </div>
     </div>

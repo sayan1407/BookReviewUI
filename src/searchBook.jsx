@@ -2,14 +2,14 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { useSearchBooksMutation } from "./Api/bookApi";
 
-function SearchBook({ fetchData,handleSearch }) {
+function SearchBook({ fetchData, handleSearch }) {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const suppressFetch = useRef(false);
 
-  const[selectedType, setSelectedType] = useState("All");
-  
+  const [selectedType, setSelectedType] = useState("All");
+
 
   // Debounce input -----------------------------------
   useEffect(() => {
@@ -20,7 +20,7 @@ function SearchBook({ fetchData,handleSearch }) {
           return;
         }
 
-        fetchData(query,selectedType).then((data) => {
+        fetchData(query, selectedType).then((data) => {
           if (data && data.length > 0) setSuggestions(data);
           else setSuggestions([]);
         });
@@ -40,10 +40,9 @@ function SearchBook({ fetchData,handleSearch }) {
     setShowDropdown(false);
   };
 
-  const searchClicked =  () => {
+  const searchClicked = () => {
     suppressFetch.current = true;
-    console.log(selectedType)
-    handleSearch({type : selectedType, keyword : query});
+    handleSearch({ type: selectedType, keyword: query });
   }
   return (
     <>
@@ -54,7 +53,7 @@ function SearchBook({ fetchData,handleSearch }) {
         onChange={(e) => setSelectedType(e.target.value)}
       >
         {/* <option selected>Search By</option>*/}
-        <option>All</option> 
+        <option>All</option>
         <option>Name</option>
         <option value="AuthorName">Author Name</option>
         <option>Genre</option>

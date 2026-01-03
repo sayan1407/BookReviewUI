@@ -4,15 +4,17 @@ import './Review.css';
 import { useGetBookByIdQuery, useGetReviewForUserQuery, useUpdateReviewForUserMutation } from './Api/bookApi';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import WithAuth from './HOC/WithAuth';
 const Review = () => {
     const { id } = useParams();
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviewText, setReviewText] = useState('');
+    const [initRating, setInitRating] = useState(0);
+    const [initReviewText, setInitReviewText] = useState('');
+    const [isDisable, setIsDisable] = useState(true);
     const { data } = useGetBookByIdQuery(id);
     const userId = useSelector((state) => state.auth.userId);
-    console.log(userId);
-    console.log(id);
     const { data: reviewData } = useGetReviewForUserQuery({
         userId,
         bookId: id
@@ -26,7 +28,6 @@ const Review = () => {
             comment: reviewText,
             rating: rating
         })
-        console.log(result)
         if (result?.data?.isSuccess) {
             toast.success("Review added successfully")
         }
@@ -38,11 +39,23 @@ const Review = () => {
         if (reviewData?.responseData) {
             setReviewText(reviewData?.responseData?.comment);
             setRating(reviewData?.responseData?.rating);
-
+            setInitRating(reviewData?.responseData?.rating);
+            setInitReviewText(reviewData?.responseData?.comment);
         }
 
-        console.log(reviewData);
     }, [reviewData])
+
+    useEffect(() => {
+
+        if (rating !== initRating || reviewText !== initReviewText) {
+            console.log("true")
+            setIsDisable(false)
+        }
+        else {
+            setIsDisable(true)
+        }
+
+    }, [rating, reviewText])
 
     return (
         <div className="review-container">
@@ -98,7 +111,7 @@ const Review = () => {
                                 value={reviewText}
                                 onChange={(e) => setReviewText(e.target.value)}
                             />
-                            <button type="submit" className="submit-btn">
+                            <button type="submit" className="submit-btn" disabled={isDisable}>
                                 Submit Review
                             </button>
                         </form>
@@ -110,4 +123,4 @@ const Review = () => {
     );
 };
 
-export default Review;
+export default WithAuth(Review);

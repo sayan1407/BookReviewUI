@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUser } from './Redux/authSlice';
 
+import { NavLink } from 'react-router-dom';
 const Login = () => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
@@ -23,13 +24,10 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         const result = await login({ email, password });
-        console.log(result);
         if (result.data?.isSuccess) {
             toast.success(result.data.responseMessage);
-            console.log(result.data.responseData.token);
-            // localStorage.setItem("token", result.data.responseData.token); // Handled by Redux slice now
             dispatch(setUser(result.data.responseData.token));
-            navigate(-1)
+            navigate("/")
         }
         else if (!result.data?.isSuccess) {
             toast.error(result.data?.errorMessages.join('/n'));
@@ -71,6 +69,9 @@ const Login = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             style={{ backgroundColor: '#2b2d31', border: '1px solid #495057', color: '#fff' }}
                         />
+                    </div>
+                    <div className="mb-3">
+                        <NavLink to="/register" >Don't have an account? Register</NavLink>
                     </div>
                     <div className="d-grid">
                         <input type="submit" className="btn btn-primary btn-lg fw-bold"

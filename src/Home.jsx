@@ -37,7 +37,6 @@ function Home() {
       setTotalPages(totalPagesCount);
       setCurrentPage(1);
       let temp = [];
-      console.log("Total Pages:", totalPagesCount);
       for (let i = 1; i <= totalPagesCount; i++) {
         temp.push(
           <li className="page-item">
@@ -94,7 +93,6 @@ function Home() {
 
   }
   const handlePagination = async (pageNumber) => {
-    console.log(searchType, searchKeyword);
     const result = await getBooks({
       pageindex: pageNumber,
       pagesize: 10,
@@ -121,14 +119,12 @@ function Home() {
   const handleSearch = async ({ type, keyword }) => {
     setSearchType(type);
     setSearchKeyword(keyword);
-    console.log("handle search called");
     const result = await getBooks({
       pageindex: 1,
       pagesize: 10,
       type: type,
       keyword: keyword,
     });
-    console.log(result);
     if (result.data?.isSuccess) {
       setBookData(result.data.responseData.books);
       let totalPagesCount =
@@ -141,7 +137,6 @@ function Home() {
 
     }
     else {
-      console.log(result.data?.responseMessage)
       toast.error(result.data?.errorMessages.join(',') || "Failed to fetch books");
     }
 
