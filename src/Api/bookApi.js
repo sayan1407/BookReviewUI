@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+const token = localStorage.getItem("token");
 export const bookApi = createApi({
   reducerPath: "apiBook",
   baseQuery: fetchBaseQuery({ baseUrl: "https://localhost:7150/api/Book" }),
@@ -54,6 +55,9 @@ export const bookApi = createApi({
         params: {
           userId: userId,
           bookId: bookId
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
         }
       }),
       providesTags: ["Review"]
@@ -64,11 +68,15 @@ export const bookApi = createApi({
 
         url: `books/review`,
         method: "PUT",
+
         body: {
           userId: userId,
           bookId: bookId,
           comment: comment,
           rating: rating
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
         }
       }),
       invalidatesTags: ["Review"]
@@ -80,6 +88,9 @@ export const bookApi = createApi({
         params: {
           pageIndex: pageIndex,
           pageSize: pageSize
+        },
+        headers: {
+          Authorization: `Bearer ${token}`
         }
       })
     })
