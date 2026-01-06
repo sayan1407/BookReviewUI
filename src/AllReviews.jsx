@@ -9,6 +9,7 @@ const AllReviews = () => {
     const [totalPages, setTotalPages] = useState(10);
     const { data: bookData } = useGetBookByIdQuery(id);
     const { data: reviewsData } = useGetReviewsByBookIdQuery({ bookId: id, pageIndex: currentPage, pageSize: 10 });
+    console.log(reviewsData);
     useEffect(() => {
         if (reviewsData?.isSuccess) {
             let totalPagesCount =
