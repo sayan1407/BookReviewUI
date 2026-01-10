@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const token = localStorage.getItem("token");
 export const bookApi = createApi({
   reducerPath: "apiBook",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://sayanksaha7-001-site1.anytempurl.com/api/Book" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://localhost:7150/api/Book" }),
   tagTypes: ["Books", "Review"],
   endpoints: (builder) => ({
     //QUERY -> GET
@@ -93,10 +93,20 @@ export const bookApi = createApi({
           Authorization: `Bearer ${token}`
         }
       })
+    }),
+
+    getRecommendedBooks: builder.query({
+      query: ({ userId }) => ({
+        url: `books/recommendedbooks/${userId}`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
     })
 
   }),
 });
 export const { useGetBooksMutation, useSearchBooksMutation, useGetSearchOptionsQuery, useGetBookByIdQuery, useGetReviewForUserQuery,
-  useUpdateReviewForUserMutation, useGetReviewsByBookIdQuery
+  useUpdateReviewForUserMutation, useGetReviewsByBookIdQuery, useGetRecommendedBooksQuery
 } = bookApi;

@@ -49,9 +49,12 @@ function Header() {
               <NavLink className="nav-link active" to="/">
                 Home
               </NavLink>
-              {/* <a className="nav-link active" href="#">
-                Home
-              </a> */}
+
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link active" to="/recommendation">
+                Book Recommendation
+              </NavLink>
             </li>
           </ul>
           <div className="d-flex gap-2">

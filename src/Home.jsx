@@ -109,7 +109,7 @@ function Home() {
 
   const fetchData = async (keyword, type) => {
     const res = await fetch(
-      `http://sayanksaha7-001-site1.anytempurl.com/api/Book/books/searchoptions?keyword=${keyword}&type=${type}`
+      `https://localhost:7150/api/Book/books/searchoptions?keyword=${keyword}&type=${type}`
     );
     const data = await res.json();
     const options = data.responseData;

@@ -56,6 +56,8 @@ const AllReviews = () => {
                             <div className="card-body">
                                 <h2 className="card-title text-warning">{bookData.responseData.name}</h2>
                                 <h5 className="card-subtitle mb-2">By {bookData.responseData.authorName}</h5>
+                                <p className="card-text"><small className="text-light">Genre: {bookData.responseData.genre}</small></p>
+                                <p className="card-text"><small className="text-light">Description: {bookData.responseData.description}</small></p>
                                 <p className="card-text"><small className="text-light">Published: {new Date(bookData.responseData.publishedDate).toLocaleDateString('en-GB')}</small></p>
                             </div>
                         </div>
