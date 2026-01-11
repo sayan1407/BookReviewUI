@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const token = localStorage.getItem("token");
 export const bookApi = createApi({
   reducerPath: "apiBook",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://localhost:7150/api/Book" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://bookreviewapi-h6evcnhwa3g8dpca.centralus-01.azurewebsites.net/api/Book" }),
   tagTypes: ["Books", "Review"],
   endpoints: (builder) => ({
     //QUERY -> GET

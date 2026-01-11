@@ -109,7 +109,7 @@ function Home() {
 
   const fetchData = async (keyword, type) => {
     const res = await fetch(
-      `https://localhost:7150/api/Book/books/searchoptions?keyword=${keyword}&type=${type}`
+      `https://bookreviewapi-h6evcnhwa3g8dpca.centralus-01.azurewebsites.net/api/Book/books/searchoptions?keyword=${keyword}&type=${type}`
     );
     const data = await res.json();
     const options = data.responseData;
