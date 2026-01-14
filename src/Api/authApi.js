@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const authApi = createApi({
     reducerPath: "apiAuth",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://sayanksaha7-001-site1.anytempurl.com/api/Auth" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://localhost:7150/api/Auth" }),
     tagTypes: ["Auth"],
     endpoints: (builder) => ({
         //QUERY -> GET
@@ -29,7 +29,17 @@ export const authApi = createApi({
             }),
         }),
 
+        googleLogin: builder.mutation({
+            query: ({ jwttoken }) => ({
+                url: "googleLogin",
+                method: "POST",
+                body: {
+                    idToken: jwttoken,
+                }
+            }),
+        }),
+
 
     }),
 });
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useGoogleLoginMutation } = authApi;
