@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./Book.css";
 
 function Book({ book }) {
   const navigate = useNavigate();
@@ -33,9 +34,14 @@ function Book({ book }) {
           <p className="mb-2 text-light small">Number of Ratings:{book.noOfRating}</p>
 
         </div>
-        <Link to={`/review/${book.id}`} className="btn btn-primary w-100">
-          Add a Review
-        </Link>
+        <div className="book-card-actions">
+          <Link to={`/review/${book.id}`} className="btn btn-custom btn-custom-review">
+            <i className="bi bi-pencil-fill"></i> Add a Review
+          </Link>
+          <Link to={`/allReviews/${book.id}`} className="btn btn-custom btn-custom-view-all">
+            <i className="bi bi-list-ul"></i> View All Reviews
+          </Link>
+        </div>
       </div>
     </div>
   );

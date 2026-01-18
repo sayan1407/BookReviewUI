@@ -1,0 +1,45 @@
+.book-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.btn-custom {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none !important; /* Ensure no underline from Link */
+}
+
+/* Add Review Button - Blue/Purple Gradient */
+.btn-custom-review {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: white !important;
+}
+
+.btn-custom-review:hover {
+  background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(37, 117, 252, 0.4);
+}
+
+/* View All Reviews Button - Teal/Green Gradient */
+.btn-custom-view-all {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white !important;
+}
+
+.btn-custom-view-all:hover {
+  background: linear-gradient(135deg, #38ef7d 0%, #11998e 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
+}
