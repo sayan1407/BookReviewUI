@@ -1,8 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const token = localStorage.getItem("token");
 export const bookApi = createApi({
   reducerPath: "apiBook",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://bookreviewapi-h6evcnhwa3g8dpca.centralus-01.azurewebsites.net/api/Book" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://bookreviewapi-h6evcnhwa3g8dpca.centralus-01.azurewebsites.net/api/Book",
+    prepareHeaders: (headers, {
+      getState
+    }) => {
+      const token = getState().auth.token;
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   tagTypes: ["Books", "Review"],
   endpoints: (builder) => ({
     //QUERY -> GET
@@ -56,9 +66,6 @@ export const bookApi = createApi({
           userId: userId,
           bookId: bookId
         },
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
       }),
       providesTags: ["Review"]
     }),
@@ -75,9 +82,6 @@ export const bookApi = createApi({
           comment: comment,
           rating: rating
         },
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
       }),
       invalidatesTags: ["Review"]
     }),
@@ -89,9 +93,6 @@ export const bookApi = createApi({
           pageIndex: pageIndex,
           pageSize: pageSize
         },
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
       })
     }),
 
@@ -99,9 +100,6 @@ export const bookApi = createApi({
       query: ({ userId }) => ({
         url: `books/recommendedbooks/${userId}`,
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
       })
     })
 
