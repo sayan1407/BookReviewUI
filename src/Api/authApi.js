@@ -29,7 +29,17 @@ export const authApi = createApi({
             }),
         }),
 
+        googleLogin: builder.mutation({
+            query: ({ jwttoken }) => ({
+                url: "googleLogin",
+                method: "POST",
+                body: {
+                    idToken: jwttoken,
+                }
+            }),
+        }),
+
 
     }),
 });
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useGoogleLoginMutation } = authApi;

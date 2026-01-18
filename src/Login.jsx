@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
 import './Login.css';
-import { useLoginMutation } from './Api/authApi';
+import { useLoginMutation, useGoogleLoginMutation } from './Api/authApi';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -13,6 +14,7 @@ const Login = () => {
     const [shouldDisabled, setShouldDisable] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [googleLogin] = useGoogleLoginMutation();
     useEffect(() => {
         if (email && password) {
             setShouldDisable(false);
@@ -36,6 +38,27 @@ const Login = () => {
             toast.error("Failed to login")
         }
     }
+
+    const handleGoogleSuccess = async (credentialResponse) => {
+        console.log("Inside the google sign in")
+        const result = await googleLogin({ jwttoken: credentialResponse.credential });
+        console.log(result)
+        if (result.data?.isSuccess) {
+            toast.success(result.data.responseMessage);
+            dispatch(setUser(result.data.responseData.token));
+            navigate("/")
+        }
+        else if (!result.data?.isSuccess) {
+            toast.error(result.data?.errorMessages.join('/n'));
+        }
+        else {
+            toast.error("Failed to login")
+        }
+    };
+
+    const handleGoogleError = () => {
+        toast.error("Google Sign-In failed");
+    };
     return (
         <div className="container d-flex justify-content-center align-items-center vh-100">
             <div className="card p-5 shadow-lg" style={{ maxWidth: '450px', width: '100%', backgroundColor: '#212529', color: '#f0f0f0', borderRadius: '15px', border: '1px solid #373b3e' }}>
@@ -73,10 +96,18 @@ const Login = () => {
                     <div className="mb-3">
                         <NavLink to="/register" >Don't have an account? Register</NavLink>
                     </div>
-                    <div className="d-grid">
+                    <div className="d-grid mb-3">
                         <input type="submit" className="btn btn-primary btn-lg fw-bold"
                             value="Login"
                             style={{ background: 'linear-gradient(45deg, #0d6efd, #0a58ca)', border: 'none' }} disabled={shouldDisabled}
+                        />
+                    </div>
+                    <div className="d-flex justify-content-center">
+                        <GoogleLogin
+                            onSuccess={handleGoogleSuccess}
+                            onError={handleGoogleError}
+                            theme="filled_black"
+                            shape="pill"
                         />
                     </div>
                 </form>

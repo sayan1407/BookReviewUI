@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import App from './App';
 import { Provider } from 'react-redux';
@@ -13,10 +14,11 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ToastContainer />
-        <App />
+        <GoogleOAuthProvider clientId='982770304458-p9fsd92al00g7cuoa10d4cbtoqb0fkf1.apps.googleusercontent.com'>
+          <ToastContainer />
+          <App />
+        </GoogleOAuthProvider>
       </BrowserRouter>
-
     </Provider>
 
   </React.StrictMode>
