@@ -8,7 +8,6 @@ import './Recommendation.css'
 
 const Recommendation = () => {
     const userId = useSelector((state) => state.auth.userId);
-    console.log(userId);
     const { data: recommendedBooks, isLoading } = useGetRecommendedBooksQuery({ userId });
     return (
         <div className="recommendation-container">

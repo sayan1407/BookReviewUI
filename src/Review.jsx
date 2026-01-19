@@ -30,6 +30,10 @@ const Review = () => {
         })
         if (result?.data?.isSuccess) {
             toast.success("Review added successfully")
+            setInitRating(rating)
+            setInitReviewText(reviewText)
+
+
         }
         else {
             toast.error("There are some unexpected errors. Review not added")
@@ -46,16 +50,14 @@ const Review = () => {
     }, [reviewData])
 
     useEffect(() => {
-
         if (rating !== initRating || reviewText !== initReviewText) {
-            console.log("true")
             setIsDisable(false)
         }
         else {
             setIsDisable(true)
         }
 
-    }, [rating, reviewText])
+    }, [rating, reviewText, initRating, initReviewText])
 
     return (
         <div className="review-container">
