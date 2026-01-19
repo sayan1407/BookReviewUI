@@ -16,7 +16,7 @@ function Book({ book }) {
     <div className="col-md-3 col-sm-6">
       <div className="card book-card p-2 bg-dark text-light">
         <img
-          src={`images/${book.imageUrl}`}
+          src={`https://bookreviewaistorage.blob.core.windows.net/book-image-container/${book.name.replaceAll(" ", "")}`}
           className="book-img w-100"
           alt="Book Image"
         />

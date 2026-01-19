@@ -14,26 +14,26 @@ function Home() {
   const [getBooks, { isLoading }] = useGetBooksMutation();
   const [bookData, setBookData] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(10);
-  const [totalPagesUI, setTotalPagesUI] = useState(10);
+  const [totalPages, setTotalPages] = useState(12);
+  const [totalPagesUI, setTotalPagesUI] = useState(12);
   const [pagesLink, setPagesLink] = useState([]);
   const [searchType, setSearchType] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const fetchBooks = async () => {
     const result = await getBooks({
       pageindex: 1,
-      pagesize: 10,
+      pagesize: 12,
       type: "",
       keyword: "",
     });
     if (result.data?.isSuccess) {
       setBookData(result.data.responseData.books);
       let totalPagesCount =
-        result.data.responseData.totalCount > 100
-          ? 10
-          : Math.ceil(result.data.responseData.totalCount / 10);
+        result.data.responseData.totalCount > 120
+          ? 12
+          : Math.ceil(result.data.responseData.totalCount / 12);
       setTotalPagesUI(totalPagesCount);
-      totalPagesCount = Math.ceil(result.data.responseData.totalCount / 10)
+      totalPagesCount = Math.ceil(result.data.responseData.totalCount / 12)
       setTotalPages(totalPagesCount);
       setCurrentPage(1);
       let temp = [];
@@ -64,7 +64,7 @@ function Home() {
   const handleNext = async () => {
     const result = await getBooks({
       pageindex: currentPage + 1,
-      pagesize: 10,
+      pagesize: 12,
       type: searchType,
       keyword: searchKeyword,
     });
@@ -81,7 +81,7 @@ function Home() {
   const handlePrevious = async () => {
     const result = await getBooks({
       pageindex: currentPage - 1,
-      pagesize: 10,
+      pagesize: 12,
       type: searchType,
       keyword: searchKeyword,
     });
@@ -95,7 +95,7 @@ function Home() {
   const handlePagination = async (pageNumber) => {
     const result = await getBooks({
       pageindex: pageNumber,
-      pagesize: 10,
+      pagesize: 12,
       type: searchType,
       keyword: searchKeyword,
     });
@@ -121,18 +121,18 @@ function Home() {
     setSearchKeyword(keyword);
     const result = await getBooks({
       pageindex: 1,
-      pagesize: 10,
+      pagesize: 12,
       type: type,
       keyword: keyword,
     });
     if (result.data?.isSuccess) {
       setBookData(result.data.responseData.books);
       let totalPagesCount =
-        result.data.responseData.totalCount > 100
-          ? 10
-          : Math.ceil(result.data.responseData.totalCount / 10);
+        result.data.responseData.totalCount > 120
+          ? 12
+          : Math.ceil(result.data.responseData.totalCount / 12);
       setTotalPagesUI(totalPagesCount);
-      totalPagesCount = Math.ceil(result.data.responseData.totalCount / 10)
+      totalPagesCount = Math.ceil(result.data.responseData.totalCount / 12)
       setTotalPages(totalPagesCount);
 
     }
