@@ -5,6 +5,7 @@ import Book from './Book'
 import Spinner from './components/Spinner'
 
 import './Recommendation.css'
+import WithAuth from './HOC/WithAuth'
 
 const Recommendation = () => {
     const userId = useSelector((state) => state.auth.userId);
@@ -30,4 +31,4 @@ const Recommendation = () => {
     )
 }
 
-export default Recommendation
+export default WithAuth(Recommendation)
