@@ -19,13 +19,13 @@ export const bookApi = createApi({
     //MUTATION -> POST/PUT/DELETE
     getBooks: builder.mutation({
       query: ({ pageindex, pagesize, type, keyword }) => ({
-        url: "books",
+        url: `books`,
         method: "POST",
         body: {
-          pageIndex: pageindex,
-          pageSize: pagesize,
           searchType: type,
-          searhKeyword: keyword
+          searhKeyword: keyword,
+          pageindex: pageindex,
+          pagesize: pagesize
         }
       }),
 

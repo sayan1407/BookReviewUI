@@ -9,19 +9,22 @@ import SearchBook from "./searchBook";
 import Spinner from "./components/Spinner";
 import { type } from "@testing-library/user-event/dist/type";
 import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentPage } from "./Redux/pageSlice";
 
 function Home() {
   const [getBooks, { isLoading }] = useGetBooksMutation();
   const [bookData, setBookData] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = useSelector((state) => state.page.currentPage);
   const [totalPages, setTotalPages] = useState(12);
   const [totalPagesUI, setTotalPagesUI] = useState(12);
   const [pagesLink, setPagesLink] = useState([]);
   const [searchType, setSearchType] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
+  const dispatch = useDispatch();
   const fetchBooks = async () => {
     const result = await getBooks({
-      pageindex: 1,
+      pageindex: currentPage,
       pagesize: 12,
       type: "",
       keyword: "",
@@ -69,7 +72,7 @@ function Home() {
       keyword: searchKeyword,
     });
     if (result.data?.isSuccess) {
-      setCurrentPage((prevPage) => prevPage + 1);
+      dispatch(setCurrentPage(currentPage + 1));
       setBookData(result.data.responseData.books);
 
     }
@@ -86,7 +89,7 @@ function Home() {
       keyword: searchKeyword,
     });
     if (result.data?.isSuccess) {
-      setCurrentPage((prevPage) => prevPage - 1);
+      dispatch(setCurrentPage(currentPage - 1));
       setBookData(result.data.responseData.books);
 
     }
@@ -100,7 +103,7 @@ function Home() {
       keyword: searchKeyword,
     });
     if (result.data?.isSuccess) {
-      setCurrentPage(pageNumber);
+      dispatch(setCurrentPage(pageNumber));
       setBookData(result.data.responseData.books);
 
     }
