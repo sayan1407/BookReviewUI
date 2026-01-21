@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { useGetRecommendedBooksQuery } from './Api/bookApi'
 import Book from './Book'
-import Spinner from './components/Spinner'
+
 
 import './Recommendation.css'
 import WithAuth from './HOC/WithAuth'
@@ -21,7 +21,15 @@ const Recommendation = () => {
             <div className="container mb-5">
                 <div className="row g-4">
                     {isLoading ? (
-                        <Spinner />
+                        <div className="ai-loading-container">
+                            <div className="ai-spinner">
+                                <div className="orbit"></div>
+                                <div className="orbit"></div>
+                                <div className="orbit"></div>
+                                <div className="core"></div>
+                            </div>
+                            <p className="ai-loading-text">AI is calculating recommendations based on your preferences...</p>
+                        </div>
                     ) : (
                         recommendedBooks && recommendedBooks.responseData && recommendedBooks.responseData.map((book) => <Book key={book.id || book.bookId} book={book} />)
                     )}
