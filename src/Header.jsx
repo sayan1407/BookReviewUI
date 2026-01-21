@@ -32,9 +32,9 @@ function Header() {
       style={{ background: "#1f1f22" }}
     >
       <div className="container">
-        <a className="navbar-brand fw-bold" href="#">
-          Book Review
-        </a>
+        <NavLink className="navbar-brand fw-bold" to="/">
+          <img src="/favicon.png" alt="Book Review" style={{ height: "40px" }} />
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -58,21 +58,24 @@ function Header() {
             </li>
           </ul>
           <div className="d-flex gap-2">
-            {email ? (
+            {email && (
               <div className="d-flex align-items-center gap-3">
                 <span className="text-white">Welcome {email}</span>
                 <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>Logout</button>
               </div>
-            ) : (
-              <>
-                <NavLink className="btn btn-outline-light" to="/login">
-                  Login
-                </NavLink>
-                <NavLink className="btn btn-outline-light" to="/register">
-                  Register
-                </NavLink>
-              </>
-            )}
+
+            )
+              // ) : (
+              //   <>
+              //     <NavLink className="btn btn-outline-light" to="/login">
+              //       Login
+              //     </NavLink>
+              //     <NavLink className="btn btn-outline-light" to="/register">
+              //       Register
+              //     </NavLink>
+              //   </>
+              // )
+            }
 
           </div>
         </div>
