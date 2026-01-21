@@ -60,15 +60,15 @@ const Login = () => {
         toast.error("Google Sign-In failed");
     };
     return (
-        <div className="container d-flex justify-content-center align-items-center vh-100">
-            <div className="card p-5 shadow-lg" style={{ maxWidth: '450px', width: '100%', backgroundColor: '#212529', color: '#f0f0f0', borderRadius: '15px', border: '1px solid #373b3e' }}>
+        <div className="container d-flex justify-content-center">
+            <div className="card p-5 shadow-lg mt-5" style={{ maxWidth: '450px', width: '100%', backgroundColor: '#212529', color: '#f0f0f0', borderRadius: '15px', border: '1px solid #373b3e' }}>
                 <div className="text-center mb-4">
-                    <h2 className="fw-bold mb-3" style={{ color: '#fff' }}>Welcome Back</h2>
+                    {/* <h2 className="fw-bold mb-3" style={{ color: '#fff' }}>Welcome Back</h2> */}
                     <p className="mb-3 login-text-gradient">
-                        Hey Book lover, login to explore, review and grow.
+                        Hey Book lover, please login to explore, review and grow.
                     </p>
                 </div>
-                <form onSubmit={handleLogin} method='POST'>
+                {/* <form onSubmit={handleLogin} method='POST'>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label fw-semibold">Email address</label>
                         <input
@@ -110,7 +110,15 @@ const Login = () => {
                             shape="pill"
                         />
                     </div>
-                </form>
+                </form> */}
+                <div className="d-flex justify-content-center">
+                    <GoogleLogin
+                        onSuccess={handleGoogleSuccess}
+                        onError={handleGoogleError}
+                        theme="filled_black"
+                        shape="pill"
+                    />
+                </div>
             </div>
         </div>
     );
