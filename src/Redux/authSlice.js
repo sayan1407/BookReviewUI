@@ -37,7 +37,7 @@ export const authSlice = createSlice({
             state.token = action.payload;
             try {
                 const decoded = jwtDecode(action.payload);
-                state.user = decoded.email;
+                state.user = decoded.name;
                 state.userId = decoded.id;
                 localStorage.setItem("token", action.payload);
             } catch (e) {

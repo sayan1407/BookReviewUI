@@ -21,6 +21,7 @@ function Header() {
   })
   */
   const email = useSelector((state) => state.auth.user);
+  console.log(email)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

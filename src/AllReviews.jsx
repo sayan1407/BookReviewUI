@@ -73,7 +73,7 @@ const AllReviews = () => {
                     reviewsData.responseData.map((review, index) => (
                         <div key={index} className="card bg-dark text-light mb-3 border-secondary">
                             <div className="card-body">
-                                <h6 className="card-subtitle mb-2 text-primary">{review.email || "Anonymous User"}</h6>
+                                <h6 className="card-subtitle mb-2 text-primary">{review.name || "Anonymous User"}</h6>
                                 <div className="mb-2">
                                     {[...Array(5)].map((_, i) => (
                                         <i key={i} className={`bi bi-star${i < review.rating ? '-fill' : ''} text-warning small me-1`}></i>
