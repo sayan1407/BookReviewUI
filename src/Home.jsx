@@ -137,10 +137,13 @@ function Home() {
       setTotalPagesUI(totalPagesCount);
       totalPagesCount = Math.ceil(result.data.responseData.totalCount / 12)
       setTotalPages(totalPagesCount);
+      setCurrentPage(1);
 
     }
     else {
       toast.error(result.data?.errorMessages.join(',') || "Failed to fetch books");
+      setSearchType("");
+      setSearchKeyword("");
     }
 
   };
@@ -164,36 +167,38 @@ function Home() {
           )}
         </div>
       </div>
-      <div className="container mb-5">
-        <nav>
-          <ul className={`pagination justify-content-center`}>
-            <li className={`page-item  ${currentPage == 1 ? 'disabled' : ''}`}>
-              <a className="page-link" onClick={() => handlePrevious()}>
-                Previous
-              </a>
-            </li>
-            {[...Array(totalPagesUI)].map((_, index) => {
-              const pageNum = index + 1;
-              return (
-                <li key={pageNum} className="page-item">
-                  <a
-                    className="page-link"
-                    href="#"
-                    onClick={() => handlePagination(pageNum)}
-                  >
-                    {pageNum}
-                  </a>
-                </li>
-              );
-            })}
-            <li className={`page-item  ${(currentPage == totalPages) ? 'disabled' : ''}`}>
-              <a className="page-link" onClick={() => handleNext()}>
-                Next
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      {totalPagesUI > 1 && (
+        <div className="container mb-5">
+          <nav>
+            <ul className={`pagination justify-content-center`}>
+              <li className={`page-item  ${currentPage == 1 ? 'disabled' : ''}`}>
+                <a className="page-link" onClick={() => handlePrevious()}>
+                  Previous
+                </a>
+              </li>
+              {[...Array(totalPagesUI)].map((_, index) => {
+                const pageNum = index + 1;
+                return (
+                  <li key={pageNum} className="page-item">
+                    <a
+                      className="page-link"
+                      href="#"
+                      onClick={() => handlePagination(pageNum)}
+                    >
+                      {pageNum}
+                    </a>
+                  </li>
+                );
+              })}
+              <li className={`page-item  ${(currentPage == totalPages) ? 'disabled' : ''}`}>
+                <a className="page-link" onClick={() => handleNext()}>
+                  Next
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      )}
     </div>
   );
 }

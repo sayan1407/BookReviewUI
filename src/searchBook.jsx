@@ -43,6 +43,7 @@ function SearchBook({ fetchData, handleSearch }) {
   const searchClicked = () => {
     suppressFetch.current = true;
     handleSearch({ type: selectedType, keyword: query });
+    setQuery("");
   }
   return (
     <>

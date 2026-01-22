@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./Redux/authSlice";
+import { setCurrentPage } from "./Redux/pageSlice";
+
 
 function Header() {
 
@@ -32,7 +34,7 @@ function Header() {
       style={{ background: "#1f1f22" }}
     >
       <div className="container">
-        <NavLink className="navbar-brand fw-bold" to="/">
+        <NavLink className="navbar-brand fw-bold" to="/" reloadDocument>
           <img src="/favicon.png" alt="Book Review" style={{ height: "40px" }} />
         </NavLink>
         <button
@@ -58,23 +60,23 @@ function Header() {
             </li>
           </ul>
           <div className="d-flex gap-2">
-            {email && (
+            {email ? (
               <div className="d-flex align-items-center gap-3">
                 <span className="text-white">Welcome {email}</span>
                 <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>Logout</button>
               </div>
 
             )
-              // ) : (
-              //   <>
-              //     <NavLink className="btn btn-outline-light" to="/login">
-              //       Login
-              //     </NavLink>
-              //     <NavLink className="btn btn-outline-light" to="/register">
-              //       Register
-              //     </NavLink>
-              //   </>
-              // )
+              : (
+                <>
+                  <NavLink className="btn btn-outline-light" to="/login">
+                    Login
+                  </NavLink>
+                  {/* <NavLink className="btn btn-outline-light" to="/register">
+                    Register
+                  </NavLink> */}
+                </>
+              )
             }
 
           </div>
