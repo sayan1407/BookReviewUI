@@ -7,7 +7,7 @@ const initialState = {
         if (token) {
             try {
                 const decoded = jwtDecode(token);
-                return decoded.email; // Storing email as the user identifier 
+                return decoded.name; // Storing email as the user identifier 
             } catch (e) {
                 return null;
             }
