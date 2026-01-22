@@ -48,7 +48,7 @@ function Header() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <NavLink className="nav-link active" to="/">
+              <NavLink className="nav-link active" to="/" reloadDocument>
                 Home
               </NavLink>
 
