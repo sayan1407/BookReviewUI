@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const bookApi = createApi({
   reducerPath: "apiBook",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://bookreviewapi-h6evcnhwa3g8dpca.centralus-01.azurewebsites.net/api/Book",
+    baseUrl: "https://localhost:7150/api/Book",
     prepareHeaders: (headers, {
       getState
     }) => {
@@ -101,10 +101,46 @@ export const bookApi = createApi({
         url: `books/recommendedbooks/${userId}`,
         method: 'GET',
       })
+    }),
+
+    getUserLibrary: builder.query({
+      query: ({ userId }) => ({
+        url: `books/users/library`,
+        params: {
+          userid : userId
+        },
+        method: 'GET',
+      }),
+      providesTags : ["Library"]
+    }),
+    
+    updateUserLibrary: builder.mutation({
+      query: ({ userId, bookId }) => ({
+        url: `books/users/library`,
+        body: {
+          userId : userId,
+          bookId : bookId
+        },
+        method: 'POST',
+      })
+    }),
+
+    removeUserLibrary: builder.mutation({
+      query: ({ userId, bookId }) => ({
+        url: `books/users/library`,
+        body: {
+          userId : userId,
+          bookId : bookId
+        },
+        method: 'DELETE',
+      }),
+      invalidatesTags: ["Library"]
     })
+
 
   }),
 });
 export const { useGetBooksMutation, useSearchBooksMutation, useGetSearchOptionsQuery, useGetBookByIdQuery, useGetReviewForUserQuery,
-  useUpdateReviewForUserMutation, useGetReviewsByBookIdQuery, useGetRecommendedBooksQuery
+  useUpdateReviewForUserMutation, useGetReviewsByBookIdQuery, useGetRecommendedBooksQuery,
+  useGetUserLibraryQuery, useUpdateUserLibraryMutation, useRemoveUserLibraryMutation
 } = bookApi;

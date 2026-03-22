@@ -59,6 +59,11 @@ function Header() {
                 Book Recommendation
               </NavLink>
             </li>
+             <li className="nav-item">
+              <NavLink className="nav-link active" to="/library">
+                Library
+              </NavLink>
+            </li>
           </ul>
           <div className="d-flex gap-2">
             {email ? (

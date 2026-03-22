@@ -6,6 +6,7 @@ import Register from "./Register";
 import Review from "./Review";
 import AllReviews from "./AllReviews";
 import Recommendation from "./Recommendation";
+import Library from "./Library";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/review/:id" element={<Review />} />
         <Route path="/allReviews/:id" element={<AllReviews />} />
         <Route path="/recommendation" element={<Recommendation />} />
+        <Route path="/library" element={<Library />} />
       </Routes>
     </div>
   );
