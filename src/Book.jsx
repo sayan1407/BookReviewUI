@@ -72,10 +72,10 @@ function Book({ book, isLibrary }) {
           <Link to={`/allReviews/${book.id}`} className="btn btn-custom btn-custom-view-all">
             <i className="bi bi-list-ul"></i> View All Reviews
           </Link>
-          {isLibrary ?  <button onClick={() => handleRemoveFromLibraryClick(book.id)} className="btn btn-custom btn-custom-view-all">
-            <i className="bi bi-list-ul"></i> Remove From Library
-          </button> : <button onClick={() => handleAddToLibraryClick(book.id)} className="btn btn-custom btn-custom-view-all">
-            <i className="bi bi-list-ul"></i> Add To Library
+          {isLibrary ?  <button onClick={() => handleRemoveFromLibraryClick(book.id)} className="btn btn-danger">
+            <i class="bi bi-book-fill"></i> Remove From Library
+          </button> : <button onClick={() => handleAddToLibraryClick(book.id)} className="btn btn-warning">
+            <i className="bi bi-book-fill"></i> Add To Library
           </button>}
 
           
