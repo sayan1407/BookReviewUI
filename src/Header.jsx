@@ -61,7 +61,7 @@ function Header() {
             </li>
              <li className="nav-item">
               <NavLink className="nav-link active" to="/library">
-                MY Library
+                My Library
               </NavLink>
             </li>
           </ul>
