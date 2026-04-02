@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const bookApi = createApi({
   reducerPath: "apiBook",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://localhost:7150/api/Book",
+    baseUrl: "https://bookreviewservice-hzhvcyghehf2hhcu.canadacentral-01.azurewebsites.net/api/Book",
     prepareHeaders: (headers, {
       getState
     }) => {
