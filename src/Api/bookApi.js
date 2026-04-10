@@ -1,18 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import createCustomBaseQuery from "./baseQuery";
+
 export const bookApi = createApi({
   reducerPath: "apiBook",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://bookreviewservice-hzhvcyghehf2hhcu.canadacentral-01.azurewebsites.net/api/Book",
-    prepareHeaders: (headers, {
-      getState
-    }) => {
-      const token = getState().auth.token;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: createCustomBaseQuery("https://bookreviewservice-hzhvcyghehf2hhcu.canadacentral-01.azurewebsites.net/api/Book"),
   tagTypes: ["Books", "Review"],
   endpoints: (builder) => ({
     //QUERY -> GET

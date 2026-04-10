@@ -1,7 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import createCustomBaseQuery from "./baseQuery";
+
 export const authApi = createApi({
     reducerPath: "apiAuth",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://bookreviewservice-hzhvcyghehf2hhcu.canadacentral-01.azurewebsites.net/api/Auth" }),
+    baseQuery: createCustomBaseQuery("https://bookreviewservice-hzhvcyghehf2hhcu.canadacentral-01.azurewebsites.net/api/Auth"),
     tagTypes: ["Auth"],
     endpoints: (builder) => ({
         //QUERY -> GET

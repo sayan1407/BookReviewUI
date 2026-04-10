@@ -47,7 +47,7 @@ const AllReviews = () => {
                     <div className="row g-0 align-items-center">
                         <div className="col-md-2 text-center">
                             <img
-                                src={`https://bookreviewaistorage.blob.core.windows.net/book-image-container/${bookData.responseData.name.replaceAll(" ", "")}`}
+                                src={`https://bookreviewstoragenew.blob.core.windows.net/book-image-container/${bookData.responseData.name.replaceAll(" ", "")}`}
                                 className="img-fluid rounded"
                                 alt={bookData.responseData.name}
                                 style={{ maxHeight: '150px' }}
