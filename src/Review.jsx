@@ -64,7 +64,7 @@ const Review = () => {
             {data?.isSuccess &&
                 <div className="review-card">
                     <div className="book-cover-container">
-                        <img src={`https://bookreviewstoragenew.blob.core.windows.net/book-image-container/${data?.responseData?.name.replaceAll(" ", "")}`} alt={data?.responseData?.name} className="book-cover" />
+                        <img src={`https://bookreviewstoragenew.blob.core.windows.net/book-image-container/${data?.responseData?.name}`} alt={data?.responseData?.name} className="book-cover" />
                     </div>
 
                     <div className="review-content">
