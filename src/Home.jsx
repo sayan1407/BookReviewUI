@@ -124,18 +124,18 @@ function Home() {
     setSearchKeyword(keyword);
     const result = await getBooks({
       pageindex: 1,
-      pagesize: 12,
+      pagesize: 40,
       type: type,
       keyword: keyword,
     });
     if (result.data?.isSuccess) {
       setBookData(result.data.responseData.books);
       let totalPagesCount =
-        result.data.responseData.totalCount > 120
-          ? 12
-          : Math.ceil(result.data.responseData.totalCount / 12);
+        result.data.responseData.totalCount > 400
+          ? 10
+          : Math.ceil(result.data.responseData.totalCount / 40);
       setTotalPagesUI(totalPagesCount);
-      totalPagesCount = Math.ceil(result.data.responseData.totalCount / 12)
+      totalPagesCount = Math.ceil(result.data.responseData.totalCount / 40)
       setTotalPages(totalPagesCount);
       setCurrentPage(1);
 
