@@ -47,7 +47,7 @@ function Book({ book, isLibrary }) {
     <div className="col-md-3 col-sm-6">
       <div className="card book-card p-2 bg-dark text-light">
         <img
-          src={`https://bookreviewstoragenew.blob.core.windows.net/book-image-container/${book.name.replaceAll(" ", "")}`}
+          src={`https://bookreviewstoragenew.blob.core.windows.net/book-image-container/${book.name}`}
           className="book-img w-100"
           alt="Book Image"
         />
